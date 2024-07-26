@@ -2,13 +2,15 @@ services:
   symfony-project:
     container_name: symfony
     image: docker-symfony 
+    environment:
+      - PROJECT_NAME=my_project
     networks:
       - symfony-project
     ports:
       - 8080:80
     restart: unless-stopped
     volumes:
-      - ./www:/var/www/html
+      - ./my_project:/var/www/html
 
 networks:
   symfony-project:
