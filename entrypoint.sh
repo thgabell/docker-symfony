@@ -10,8 +10,6 @@ if [ ! -d "$PROJECT_NAME" ]; then
   symfony new ${PROJECT_NAME} --webapp --no-git
   wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1-en.php -O adminer.php
   mv adminer.php ${PROJECT_NAME}/public
-  mv ${PROJECT_NAME}/* . 
-  rm -rf ${PROJECT_NAME}
 else
   echo "Directory exists, symfony project creation skipped..."
 fi
