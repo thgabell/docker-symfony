@@ -1,16 +1,22 @@
 #!/bin/bash
-set -e
 
-if [ "$(ls -A /var/www/html)" ]; then
-    echo "Directory not empty, symfony project creation skipped..."
-else
-    echo "Symfony project creation...: ${PROJECT_NAME}"
-    create-project symfony/skeleton:"7.1.*" ${PROJECT_NAME}
-    cd ${PROJECT_NAME}
-    composer require webapp 
-    mv ${PROJECT_NAME}/* ${PROJECT_NAME}/.* .
-    rmdir ${PROJECT_NAME}
-    composer install
+if [ -z "$PROJECT_NAME" ]; then
+  echo "PROJECT_NAME undefined!"
+  exit 1
 fi
 
-exec "$@"
+if [ ! -d "$PROJECT_NAME" ]; then
+  echo "Symfony project creation...: ${PROJECT_NAME}"
+  symfony new ${PROJECT_NAME} --webapp --no-git
+  wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1-en.php -O adminer.php
+  mv adminer.php ${PROJECT_NAME}/public
+  mv ${PROJECT_NAME}/* . 
+  rm -rf ${PROJECT_NAME}
+else
+  echo "Directory exists, symfony project creation skipped..."
+fi
+
+cd ${PROJECT_NAME}
+
+# Démarrer le serveur Symfony
+exec symfony server:start --no-tls --port=8000

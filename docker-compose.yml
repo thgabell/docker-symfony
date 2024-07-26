@@ -7,7 +7,7 @@ services:
     networks:
       - symfony-project
     ports:
-      - 8080:80
+      - 8080:8000
     restart: unless-stopped
     volumes:
       - ./my_project:/var/www/html
