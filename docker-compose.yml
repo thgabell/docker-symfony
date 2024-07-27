@@ -10,7 +10,7 @@ services:
       - 8080:8000
     restart: unless-stopped
     volumes:
-      - ./my_project:/var/www/html
+      - ./:/var/www
 
 networks:
   symfony-project:
